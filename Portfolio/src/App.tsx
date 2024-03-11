@@ -8,7 +8,9 @@ import Stats from './components/stats'
 function App() {
   return (
     <>
-      <Stats />
+      <div className="container">
+        <Stats />
+      </div>
     </>
   )
 }

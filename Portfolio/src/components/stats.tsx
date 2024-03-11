@@ -1,7 +1,7 @@
 function Stats() {
   return (
     <>
-    <div className="block-container">
+    <div className="block-container" id="stats-block">
         <h1>stats</h1>
         <div className="stat">
             <div className="stat-block" id="github">
