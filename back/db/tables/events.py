@@ -1,5 +1,5 @@
 # ruff: noqa
-from sqlalchemy import Column, String, Boolean, Integer, JSON, func
+from sqlalchemy import Column, String, Boolean, Integer
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -7,37 +7,28 @@ from sqlalchemy.exc import SQLAlchemyError
 
 Base = declarative_base()
 
-
-class Skill_:
-    def __init__(self, data: dict) -> None:
-        self.data = data
-
-        self.id: int = data.get('id')
-        self.name: str = data.get('name')
-        self.image: str = data.get('image')
-        self.isPublic: bool = data.get('isPublic', True)
-
-
-class Skill(Base):
-    __tablename__ = 'skills'
+class Event(Base):
+    __tablename__ = 'events'
 
     id = Column(Integer, primary_key=True)
+    t = Column(String)
     name = Column(String)
+    year = Column(Integer)
+    description = Column(String)
     isPublic = Column(Boolean, default=True)
     image = Column(String, default=None)
 
 
-class SkillsTable:
-    """Skills table"""
+class EventsTable:
+    """Events table"""
     def __init__(self, Session):
         self.Session = Session
 
-
-    def get_all(self) -> list[Skill]:
+    def get_all(self) -> list[Event]:
         session = self.Session()
         try:
-            skills = session.query(Skill).all()
-            return skills
+            events = session.query(Event).all()
+            return events
         except SQLAlchemyError as e:
             print(e)
             session.rollback()
@@ -45,16 +36,18 @@ class SkillsTable:
         finally:
             session.close()
 
-
-    def insert(self, skill: Skill_) -> None:
+    def insert(self, event_data: dict) -> None:
         session = self.Session()
         try:
-            new_skill = Skill(
-                name=skill.name,
-                isPublic=skill.isPublic,
-                image=skill.image
+            new_event = Event(
+                t=event_data.get('t'),
+                name=event_data.get('name'),
+                year=event_data.get('year'),
+                description=event_data.get('description'),
+                isPublic=event_data.get('isPublic', True),
+                image=event_data.get('image')
             )
-            session.add(new_skill)
+            session.add(new_event)
             session.commit()
         except SQLAlchemyError as e:
             print(e)
@@ -63,17 +56,16 @@ class SkillsTable:
         finally:
             session.close()
 
-
-    def edit(self, skill_id: int, **kwargs) -> None:
+    def edit(self, event_id: int, **kwargs) -> None:
         session = self.Session()
         try:
-            skill = session.query(Skill).filter_by(id=skill_id).first()
-            if skill:
+            event = session.query(Event).filter_by(id=event_id).first()
+            if event:
                 for key, value in kwargs.items():
-                    setattr(skill, key, value)
+                    setattr(event, key, value)
                 session.commit()
             else:
-                raise ValueError(f"Skill with id {skill_id} does not exist.")
+                raise ValueError(f"Event with id {event_id} does not exist.")
         except SQLAlchemyError as e:
             print(e)
             session.rollback()
