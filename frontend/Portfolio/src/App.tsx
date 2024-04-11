@@ -1,18 +1,29 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 import './App.css'
 import './index.css'
-import Stats from './components/stats'
+import Home from './pages/index';
+// import Stats from './components/stats'
+import E404 from "./pages/404";
 
 function App() {
   return (
     <>
-      <div className="container">
-        <Stats />
-      </div>
+    <noscript>Необходимо активировать Javascript в настройках вашего браузера</noscript>
+    <Router>
+      {/* <NavBar /> */}
+      <Routes>
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/books" element={<Books />} /> */}
+          {/* <Route path="/search" element={<Search />} /> */}
+          <Route path="*" element={<E404 />} /> 
+      </Routes>
+    </Router>
     </>
   )
 }
 
-export default App
+export default App;
