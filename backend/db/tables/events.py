@@ -20,6 +20,9 @@ class Event(Base):
 
 
 class EventsTable:
+    name = 'events'
+    schema = 'public'
+    
     """Events table"""
     def __init__(self, Session):
         self.Session = Session

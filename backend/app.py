@@ -7,6 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask import Flask, request, jsonify
 
+# from ..db.main import Database
 from db.main import Database
 # from db.tables import User_, Post_
 # from dev.exceptions import *
@@ -22,10 +23,11 @@ if os.environ.get('DOCKERIZED', '') != 'true':
 
 DATABASE_URL = os.getenv('POSTGRES_CONN')
 # JWT_SECRET_TOKEN = os.getenv('JWT_SECRET_TOKEN')
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, echo=True)
 Session = sessionmaker(bind=engine)
 db = Database(Session, engine)
 db.create()
+# print(db.projects.get_all())
 
 
 def setup() -> None:
@@ -37,8 +39,13 @@ def get_data() -> dict:
     data['projects'] = db.projects.get_all()
     data['events'] = db.events.get_all()
     data['skills'] = db.skills.get_all()
-    print(data)
+    # print(data)
     return data
+
+
+@app.route("/")
+def main():
+    return "ok"
 
 
 @app.route('/api/projects', methods=['GET'])

@@ -36,6 +36,7 @@ class Project(Base):
 
 
 class ProjectsTable:
+    
     """Projects table"""
     def __init__(self, Session):
         self.Session = Session

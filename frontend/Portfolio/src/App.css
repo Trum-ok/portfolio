@@ -2,6 +2,18 @@
   width: 100vw;
 }
 
+nav {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+/* .navLinks-container { */
+  /* display: flex; */
+  /* justify-content: space-around; */
+/* } */
+
 .container {
   width: 100vw;
   display: flex;

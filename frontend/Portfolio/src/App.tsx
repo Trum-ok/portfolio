@@ -5,8 +5,8 @@ import {
 } from "react-router-dom";
 import './App.css'
 import './index.css'
+import NavBar from './components/navbar';
 import Home from './pages/index';
-// import Stats from './components/stats'
 import E404 from "./pages/404";
 
 function App() {
@@ -14,11 +14,10 @@ function App() {
     <>
     <noscript>Необходимо активировать Javascript в настройках вашего браузера</noscript>
     <Router>
-      {/* <NavBar /> */}
+      <NavBar />
       <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/books" element={<Books />} /> */}
-          {/* <Route path="/search" element={<Search />} /> */}
           <Route path="*" element={<E404 />} /> 
       </Routes>
     </Router>
